@@ -1,0 +1,9 @@
+{
+  "name": "agendamiento_citas",
+  "version": "1.0.0",
+  "description": "prueba tecnica PANA BUSINESS",
+  "main": "/index.php",
+  "repository": "https://github.com/lubarrolleta/citas_medicas_app.git",
+  "author": "luis barrolleta",
+  "license": "MIT"
+}
