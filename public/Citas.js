@@ -214,14 +214,7 @@ export class Citas {
     return num >= min && num <= max;
   }
   #renderTables(data, funcionAgendar, reload, current) {
-    // console.log(current,"currentcurrent");
-    // const horas = data.agendamiento.map(h=>{
-    //     console.log(Number(h.hora_inicio.split(":")[0]),Number(h.hora_fin.split(":")[0]))
-    //     const min = Math.min(Number(h.hora_inicio.split(":")[0]),Number(h.hora_fin.split(":")[0]))
-    //     const max = Math.max(Number(h.hora_inicio.split(":")[0]),Number(h.hora_fin.split(":")[0]))
-    //     // return [...min,...max]
-    // })
-    // console.log(horas);
+   
     const minHora = data.agendamiento
       .map((h) => Number(h.hora_inicio.split(":")[0]))
       .reduce((a, b) => (a < b ? a : b));
@@ -258,7 +251,7 @@ export class Citas {
 
     const containerNavegacion = document.createElement("div");
     containerNavegacion.className =
-      "containerNavegacion d-flex justify-content-evenly flex-wrap align-items-center";
+      "containerNavegacion d-flex justify-content-evenly flex-wrap align-items-center gap-1";
     containerTabla.appendChild(containerNavegacion);
 
     const table = document.createElement("table");
@@ -278,9 +271,7 @@ export class Citas {
 
     this.btnPrevius.textContent = "Semana anterior";
 
-    // const year = document.createElement("span");
-    //   this.this.btnNext = document.createElement("button");
-    // this.this.btnPrevius = document.createElement("button");
+  
     this.year = document.createElement("span");
     this.weekCurrentBtn = document.createElement("button");
     this.weekCurrentBtn.className = "btn btn-primary";
@@ -327,16 +318,7 @@ export class Citas {
       th.setAttribute("scope", "row");
       th.textContent = Object.values(agen);
       trBody.appendChild(th);
-      // for (let index = 0; index < this.#data.agendamiento.length; index++) {
-      //   const diaSemana = this.#data.agendamiento[index];
-      //   console.log(current,"bv")
-      //   const day = new Date(current);
-      //   day.setDate(current.getDate() + index);
-      //   // const fechaObjetivo = current;
-      //   // fechaObjetivo.setDate()
-      //   console.log(day, "dia",diaSemana);
-
-      // }
+    
       this.#data.agendamiento.forEach((diaSemana, i) => {
         // console.log(i+1,"i",this.currentWeekStart)
         const day = new Date(current);
