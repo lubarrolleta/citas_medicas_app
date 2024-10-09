@@ -1,6 +1,5 @@
 import { Form } from "./Form.js?reamdom=2ss";
 
-// import {CitasMedicas} from "./javascript.js?ramdon=9"
 export class Acordeon  {
     #data;
     #user;
@@ -8,17 +7,13 @@ export class Acordeon  {
     #pacientes
     currentDateParam
     constructor(data,user,medico,reload,currentDateParam) {
-        // super()
-        // console.log(reload,"reload");
         this.#data = data;
         this.#user = user;
         this.#medico = medico;
         this.currentDateParam = currentDateParam;
-        // this.#pacientes =pacientes;
        return this.render(reload)
     }
     render(reload) {
-        // console.log(this.#data,this.#user);
         const {id} = this.#data;
         const {nombre,apellido} = this.#user;
         // console.log(id);

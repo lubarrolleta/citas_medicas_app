@@ -47,50 +47,38 @@ export class Citas {
   }
   iniCalendar() {
     const interval = setInterval(() => {
-      // console.log(this.calendarioTop);
-      // this.calendarBody = document.querySelector('#calendar tbody');
       if (this.calendarioTop) {
         clearInterval(interval);
         this.#bodyModal = document.querySelector(".modal-body");
 
-        // this.weekDisplay = document.getElementById('weekDisplay');
-        // this.prevWeek = document.getElementById('prevWeek');
-        // this.nextWeek = document.getElementById('nextWeek');
-        // Variables para manejar la semana actual
-
-        // Generar el calendario inicial
-        // this.generateCalendar(this.currentWeekStart);
         this.updateWeekDisplay(this.currentWeekStart);
         // Eventos para los botones de navegación
-        this.weekCurrentBtn.addEventListener("click",()=>{
-          console.log("weekCurrentBtn")
-          const current = this.getStartOfWeek(new Date());
-          // console.log(current);
-          this.currentWeekStart = current;
-          const tabla = this.#renderTables(
-            this.#data,
-            this.funcionAgendar,
-            this.reload,
-            current
-          );
-          console.log(tabla)
-          this.#bodyModal.replaceChildren(tabla);
+        this.weekCurrentBtn.addEventListener(
+          "click",
+          () => {
+            console.log("weekCurrentBtn");
+            const current = this.getStartOfWeek(new Date());
 
-          // this.generateCalendar(this.currentWeekStart);
-          this.updateWeekDisplay(this.currentWeekStart);
+            this.currentWeekStart = current;
+            const tabla = this.#renderTables(
+              this.#data,
+              this.funcionAgendar,
+              this.reload,
+              current
+            );
+            console.log(tabla);
+            this.#bodyModal.replaceChildren(tabla);
 
-        },false);
+            this.updateWeekDisplay(this.currentWeekStart);
+          },
+          false
+        );
         this.btnPrevius.addEventListener("click", () => {
-          // console.log(this.currentWeekStart);
           const current = this.currentWeekStart;
-          // console.log(current, "current");
           current.setDate(current.getDate() - 7);
-          // this.generateCalendar(this.currentWeekStart);
-          // console.log(this.currentWeekStart, current);
-          this.currentWeekStart = current;
-          // this.calendarioTop.innerHTML=""
 
-          // console.log(this.#bodyModal)
+          this.currentWeekStart = current;
+
           const tabla = this.#renderTables(
             this.#data,
             this.funcionAgendar,
@@ -98,11 +86,8 @@ export class Citas {
             current
           );
           const parent = this.calendarioTop.parentNode;
-          // console.log(tabla,"tabla",this.calendarioTop.parentNode)
           this.#bodyModal.replaceChildren(tabla);
           this.updateWeekDisplay(this.currentWeekStart);
-          // this.calendarioTop.replaceChildren(this.calendarioTop)
-          // return
         });
 
         this.btnNext.addEventListener("click", () => {
@@ -122,83 +107,7 @@ export class Citas {
       }
     }, 200);
   }
-  // Función para generar el calendario
-  generateCalendar(startOfWeek) {
-    // Limpiar el cuerpo del calendario
-    this.calendarBody.innerHTML = "";
 
-    // Generar las horas (por ejemplo, de 8 AM a 6 PM)
-    const minHora = this.#data.agendamiento
-      .map((h) => Number(h.hora_inicio.split(":")[0]))
-      .reduce((a, b) => (a < b ? a : b));
-    const maxHora = this.#data.agendamiento
-      .map((h) => Number(h.hora_fin.split(":")[0]))
-      .reduce((a, b) => (a > b ? a : b));
-    const startHour = minHora;
-    const endHour = maxHora;
-
-    for (let hour = startHour; hour <= endHour; hour++) {
-      const row = document.createElement("tr");
-
-      // Celda de hora
-      const timeCell = document.createElement("td");
-      timeCell.classList.add("time-label");
-      timeCell.textContent = this.formatHour(hour);
-      row.appendChild(timeCell);
-
-      // Generar celdas para cada día laboral (lunes a viernes)
-      for (let i = 0; i < 5; i++) {
-        // 5 días laborales
-        const agen = { [hour]: `${hour}:00:00` };
-        console.log(agen, "hora");
-        const day = new Date(startOfWeek);
-        day.setDate(startOfWeek.getDate() + i);
-
-        const cell = document.createElement("td");
-        cell.classList.add("time-slot");
-        cell.dataset.date = day.toISOString().split("T")[0];
-        cell.dataset.hour = hour;
-        this.#data.agendamiento.forEach((diaSemana) => {
-          const horaIni = Number(diaSemana.hora_inicio.split(":")[0]);
-          const horaFinal = Number(diaSemana.hora_fin.split(":")[0]);
-          // console.log(horaFinal,horaIni);
-          // console.log(diaSemana);
-          // console.log(diaSemana.hora_inicio,"diaSemana",agen[horaIni])
-          // console.log(agen[horaFinal])
-          // // console.log(`'${diaSemana.hora_inicio}'`);
-          // console.log(agen[horaIni] && agen[horaFinal]);
-          // console.log(Number(Object.keys(agen)));
-          // const td = document.createElement("td");
-          console.log(Object.values(agen));
-          this.#validaHorario(
-            Number(Object.keys(agen).toString()),
-            horaIni,
-            horaFinal
-          ) &&
-            cell.replaceChildren(
-              new DropDown(
-                this.#pacientes,
-                "Selecciona un paciente.",
-                this.funcionAgendar,
-                {
-                  ...diaSemana,
-                  hora: Object.values(agen).toString(),
-                  ["id_turno"]: Number(diaSemana.id_turno),
-                },
-                this.#data,
-                this.reload //propiedad de app padre
-              )
-            );
-          // trBody.appendChild(td);
-        });
-        // Opcional: Puedes agregar eventos o citas aquí
-
-        row.appendChild(cell);
-      }
-
-      this.calendarBody.appendChild(row);
-    }
-  }
   // Función para formatear la hora en formato AM/PM
   formatHour(hour) {
     const ampm = hour >= 12 ? "PM" : "AM";
@@ -282,69 +191,7 @@ export class Citas {
       }
     }, 200);
   }
-  #initCalendario(data) {
-    const horas = data.agendamiento.map((h) => (h.hora_inicio, h.hora_fin));
-    console.log(horas);
-    const interval = setInterval(() => {
-      if (window.FullCalendar) {
-        clearInterval(interval);
-        const calendarioEl = document.getElementById("calendario");
-        const calendar = new FullCalendar.Calendar(calendarioEl, {
-          //         initialView: 'timeGridWeek',
-          //         allDaySlot: false, // Ocultar la franja de todo el día
-          //         selectable: true, // Permitir selección de rangos de tiempo
-          // selectMirror: true,
-          // eventClick: function(info) {
-          //     // Opcional: Manejar clic en eventos existentes
-          //     alert(`Cita: ${info.event.title}\nFecha: ${info.event.start.toLocaleString()}`);
-          // },
-          // events: [], // Inicialmente sin eventos
-          // headerToolbar: {
-          //     left: 'prev,next today',
-          //     center: 'title',
-          //     right: 'timeGridWeek,timeGridDay'
-          // },
-          // businessHours: { // Definir días y horas hábiles
-          //     daysOfWeek: [1, 2, 3, 4, 5], // Lunes a Viernes
-          //     startTime: '08:00',
-          //     endTime: '18:00',
-          // },
-          // nowIndicator: true,
-          // editable: false,
-          // selectable: true,
-          // selectOverlap: false,
-          // allDaySlot: false,
-          defaultView: "timeGridWeek",
-          lang: "es",
-          weekends: false,
-          columnFormat: "dddd",
-          //dayNames: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-          header: {
-            left: "prev,next today",
-            center: "title",
-            right: "month,agendaWeek,agendaDay",
-          },
-          defaultDate: "2018-11-11",
-          editable: true,
-          eventLimit: true,
-          weekend: true,
-          allDaySlot: false,
-          minTime: "09:00:00",
-          maxTime: "15:00:00",
-          slotDuration: "00:20:00",
-          slotLabelInterval: "00:20:00",
-          events: [
-            {
-              title: "Titulo Evento",
-              start: "2018-11-11T09:00:55.008",
-              end: "2018-11-11T09:15:55.008",
-            },
-          ],
-        });
-        calendar.render();
-      }
-    }, 200);
-  }
+
   #secuencia(minHora, maxHora) {
     // console.log(data);
     // const { hora_inicio, hora_fin } = data;
@@ -439,12 +286,10 @@ export class Citas {
     this.weekCurrentBtn.className = "btn btn-primary";
     this.weekCurrentBtn.innerHTML = `<i class="bi bi-arrow-clockwise"></i>`;
 
-
     containerNavegacion.appendChild(this.btnPrevius);
     containerNavegacion.appendChild(this.year);
     containerNavegacion.appendChild(this.btnNext);
     containerNavegacion.appendChild(this.weekCurrentBtn);
-
 
     table.appendChild(caption);
 

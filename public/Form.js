@@ -5,17 +5,17 @@ export class Form {
   #data;
   #user;
   #medico;
-#pacientes
+  #pacientes;
   #spinner = `<div class="spinner-border spinner-border-sm text-white" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>`;
-  currentDateParam
-  constructor(data, user,medico,reload,currentDateParam) {
+  currentDateParam;
+  constructor(data, user, medico, reload, currentDateParam) {
     // console.log(reload,"reload");
     this.currentDateParam = currentDateParam;
     this.#data = data;
     this.#user = user;
-    this.#medico=medico;
+    this.#medico = medico;
     // this.#pacientes = pacientes;
     return this.render(reload);
   }
@@ -39,7 +39,7 @@ export class Form {
     select.name = "estado";
     select.setAttribute("aria-label", "Floating label select example");
     // console.log(["Confirmada", "Cancelada"]);
-    const options = ["Confirmada", "Cancelada"]
+    const options = ["Confirmada", "Cancelada"];
     options.forEach((estado) => {
       // console.log(estado);
       // console.log(this.#user.estado === estado)
@@ -75,21 +75,40 @@ export class Form {
           disabled("remove");
           e.target.textContent = currentLabel;
           containerFloating.hidden = true;
-            console.log(reload.pacientes,formData.estado)
-            this.#data.estado = formData.estado
-            console.log(reload.pacientes.find(p=>p.idPaciente === this.#user.idPaciente))
-            const dataUserPrev = reload.pacientes.find(p=>p.idPaciente === this.#user.idPaciente)
-            const positionCita = dataUserPrev.citas.findIndex(c=>c.id===this.#data.id);
-            dataUserPrev.citas[positionCita]['estado'] = formData.estado.toString();
-            console.log(positionCita,dataUserPrev);
-            const positionUser = reload.pacientes.findIndex(p=>p.idPaciente === this.#user.idPaciente)
-            reload.pacientes[positionUser] = dataUserPrev;
-            console.log(reload.pacientes)
-            reload.reloadCitas && reload.reloadCitas(reload.pacientes,reload.button,reload.medicos,reload.renderCitas,reload.paciente)
-            new Toast("Se ejecuto con exito!",`La cita ID:${this.#data.id}, Se Actualizo con exito`)
-        //   alert("Cita Actualizada");
-            
-        //   console.log(update);
+          console.log(reload.pacientes, formData.estado);
+          this.#data.estado = formData.estado;
+          console.log(
+            reload.pacientes.find((p) => p.idPaciente === this.#user.idPaciente)
+          );
+          const dataUserPrev = reload.pacientes.find(
+            (p) => p.idPaciente === this.#user.idPaciente
+          );
+          const positionCita = dataUserPrev.citas.findIndex(
+            (c) => c.id === this.#data.id
+          );
+          dataUserPrev.citas[positionCita]["estado"] =
+            formData.estado.toString();
+          console.log(positionCita, dataUserPrev);
+          const positionUser = reload.pacientes.findIndex(
+            (p) => p.idPaciente === this.#user.idPaciente
+          );
+          reload.pacientes[positionUser] = dataUserPrev;
+          console.log(reload.pacientes);
+          reload.reloadCitas &&
+            reload.reloadCitas(
+              reload.pacientes,
+              reload.button,
+              reload.medicos,
+              reload.renderCitas,
+              reload.paciente
+            );
+          new Toast(
+            "Se ejecuto con exito!",
+            `La cita ID:${this.#data.id}, Se Actualizo con exito`
+          );
+          //   alert("Cita Actualizada");
+
+          //   console.log(update);
         }
       },
       false
@@ -118,28 +137,35 @@ export class Form {
     const btnDelete = document.createElement("button");
     btnDelete.className = "btn btn-danger btn-sm";
     btnDelete.textContent = "Eliminar";
-    btnDelete.addEventListener("click", async(e) => {
+    btnDelete.addEventListener(
+      "click",
+      async (e) => {
         e.preventDefault();
         const currentLabel = e.target.textContent;
         e.target.innerHTML = this.#spinner;
         disabled();
-        if(confirm("Deseas eliminar esta cita?")){
-            const deleteCita = await new Querys().deleteCita(null,this.#data.id)
-            if(!deleteCita.error){
-                disabled("remove");
-                e.target.textContent = currentLabel;
-                // console.log(reload,"reload")
-                new Toast("Se ejecuto con exito!",`La cita ID:${this.#data.id}, Se elimino con exito`)
-                // alert("Cita eliminada con exito!")
-               await new Querys().getPacientes(reload,this.currentDateParam) 
-                // console.log(reload)
-                // reload
-            }
-        }else{
+        if (confirm("Deseas eliminar esta cita?")) {
+          const deleteCita = await new Querys().deleteCita(null, this.#data.id);
+          if (!deleteCita.error) {
             disabled("remove");
             e.target.textContent = currentLabel;
+            // console.log(reload,"reload")
+            new Toast(
+              "Se ejecuto con exito!",
+              `La cita ID:${this.#data.id}, Se elimino con exito`
+            );
+            // alert("Cita eliminada con exito!")
+            await new Querys().getPacientes(reload, this.currentDateParam);
+            // console.log(reload)
+            // reload
+          }
+        } else {
+          disabled("remove");
+          e.target.textContent = currentLabel;
         }
-    },false);
+      },
+      false
+    );
 
     const btnMod = document.createElement("button");
     btnMod.className = "btn btn-info btn-sm";

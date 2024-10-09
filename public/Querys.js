@@ -20,15 +20,10 @@ export class Querys{
               const getData = await this.#cutomFetch(url,params);
           if (!getData.error) {
             const prevData = this.#purificaDataPaciente(getData);
-            // console.log(reload)
-            // reload(prevData);
-            // reload.pacientes = prevData;
-            // console.log(reload.pacientes)
-            // console.log(currentDateParam,"currentDateParam")
+          
             reload.reload && reload.reload(prevData,reload.button,currentDateParam);
             reload.reloadCitas && reload.reloadCitas(prevData,reload.button,reload.medicos,reload.renderCitas,reload.paciente,reload.renderGen)
-            // console.log(prevData);
-            // this.#RenderCard();
+           
           }
         } catch (error) {
             console.error(error,"getpacientes");
@@ -119,6 +114,5 @@ export class Querys{
             return acc || null;
           }, []);
           return prevData.filter(c=>c !== 'empty')
-        //   .map(([key,value])=> value!==null && ({[key]:value}));
       }
 }
