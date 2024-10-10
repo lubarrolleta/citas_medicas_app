@@ -47,11 +47,11 @@ export class DropDown {
     ul.className = "dropdown-menu";
     // console.log(data);
     data.forEach((paci) => {
-      console.log(fecha, "fecha");
+      // console.log(fecha, "fecha");
       const validaFechaCitasOtrosMedicos = paci.citas.find(
         (c) => c.fecha === fecha && c.hora === agendamientoHora.hora
       );
-      console.log(validaFechaCitasOtrosMedicos, paci);
+      // console.log(validaFechaCitasOtrosMedicos, paci);
       if (paci.id_turno === agendamientoHora.id_turno) {
       }
       const li = document.createElement("li");

@@ -1,5 +1,5 @@
-import { Querys } from "./Querys.js?byffsszzsssss";
-import { Toast } from "./Toast.js?nffsssznn";
+import { Querys } from "./Querys.js?byffsszszsssss";
+import { Toast } from "./Toast.js?nffssssznn";
 
 export class Form {
   #data;
@@ -75,11 +75,11 @@ export class Form {
           disabled("remove");
           e.target.textContent = currentLabel;
           containerFloating.hidden = true;
-          console.log(reload.pacientes, formData.estado);
+        //   console.log(reload.pacientes, formData.estado);
           this.#data.estado = formData.estado;
-          console.log(
-            reload.pacientes.find((p) => p.idPaciente === this.#user.idPaciente)
-          );
+        //   console.log(
+        //     reload.pacientes.find((p) => p.idPaciente === this.#user.idPaciente)
+        //   );
           const dataUserPrev = reload.pacientes.find(
             (p) => p.idPaciente === this.#user.idPaciente
           );
@@ -88,12 +88,12 @@ export class Form {
           );
           dataUserPrev.citas[positionCita]["estado"] =
             formData.estado.toString();
-          console.log(positionCita, dataUserPrev);
+        //   console.log(positionCita, dataUserPrev);
           const positionUser = reload.pacientes.findIndex(
             (p) => p.idPaciente === this.#user.idPaciente
           );
           reload.pacientes[positionUser] = dataUserPrev;
-          console.log(reload.pacientes);
+        //   console.log(reload.pacientes);
           reload.reloadCitas &&
             reload.reloadCitas(
               reload.pacientes,

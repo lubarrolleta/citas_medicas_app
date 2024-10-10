@@ -1,11 +1,12 @@
-import { Citas } from "./Citas.js?ramdom=skk6ssasasss";
-import { Modal } from "./Modal.js?cvssvvssszsssv";
-import { Pacientes } from "./Pacientes.js?sssszsvb";
-import { Toast } from "./Toast.js?sbnnnn";
+import { Citas } from "./Citas.js?ramdom=skk6ssadsasss";
+import { Modal } from "./Modal.js?cvssvvssszsdssv";
+import { Pacientes } from "./Pacientes.js?sssszsvbd";
+import { Toast } from "./Toast.js?sbnnndn";
+import { IS_PROD, URL_PROD, URL_TEST } from "./contantes.js?vb";
 
 export class CitasMedicas {
   #main;
-  #url = `http://localhost/agendamiento_citas/citas`;
+  #url = IS_PROD ? URL_PROD : URL_TEST;
   #medicos = [];
   #pacientes = [];
   #modal;
@@ -23,7 +24,7 @@ export class CitasMedicas {
   }
   async getPacientes() {
     try {
-      const url = "http://localhost/agendamiento_citas/pacientes/";
+      const url = this.#url+"/agendamiento_citas/pacientes/";
       const params = {
         method: "GET",
         headers: {
@@ -60,7 +61,7 @@ export class CitasMedicas {
         },
         body: null,
       };
-      const getData = await this.#cutomFetch(this.#url, params);
+      const getData = await this.#cutomFetch(this.#url +"/agendamiento_citas/citas", params);
       if (!getData.error) {
         const prevData = this.#purificaDataMedico(getData);
         this.#medicos = prevData;
@@ -152,7 +153,7 @@ export class CitasMedicas {
   async #onAgendar(data, button, paciente) {
     // console.log(button);
     console.log(paciente, "data");
-    this.urlPacientes = "http://localhost/agendamiento_citas/citas/";
+    this.urlPacientes = this.#url+"/agendamiento_citas/citas/";
     //
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {

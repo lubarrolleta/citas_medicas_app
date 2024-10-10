@@ -49,7 +49,7 @@ export class Modal{
             this.currentDate = undefined;
             this.showModal = false;
             this.#content.innerHTML = ``
-            console.log("show")
+            // console.log("show")
               modalBackdrop && modalBackdrop.forEach(m=>{ 
               
               });

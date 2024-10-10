@@ -1,9 +1,11 @@
 <?php
-require_once('./restFull.php');
-// header('Content-Type: text/html');
-header('Access-Control-Allow-Origin: http://localhost');
-header("Access-Control-Allow-Headers: X-type");
+require_once('../src/utils/constantes.php');
 
+require_once('./restFull.php');
+$url = $IS_PROD ?  $URL_PROD : $URL_TEST; 
+header('Access-Control-Allow-Origin: '.$url);
+header("Access-Control-Allow-Headers: X-type");
+// file_exists(__DIR__ . '/includes/archivo.php')
 // $nombre = $_GET['nombre'];
 $restFull = new RestFull;
 $request = $_SERVER['REQUEST_METHOD'];

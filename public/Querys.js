@@ -1,13 +1,16 @@
 // import {CitasMedicas} from "./javascript.js?ramdon=9"
 
-export class Querys{
-    #urlCitas = "http://localhost/agendamiento_citas/citas/"
-    constructor(){
+import { IS_PROD, URL_PROD, URL_TEST } from "./contantes.js";
 
+export class Querys{
+
+    #urlCitas = IS_PROD ? URL_PROD : URL_TEST 
+    constructor(){
+        console.log(this.#urlCitas)
     }
     async getPacientes(reload,currentDateParam) {
         try {
-            const url = "http://localhost/agendamiento_citas/pacientes/"
+            const url = this.#urlCitas + "/agendamiento_citas/pacientes/"
             const params = {
                 method: "GET",
                 headers: {
@@ -33,7 +36,9 @@ export class Querys{
     async deleteCita(data,id){
         try {
             // const 
-            const url = this.#urlCitas;
+            const url = this.#urlCitas +"/agendamiento_citas/citas/";
+            console.log(url)
+
             const params = {
               method: "DELETE",
               headers: {
@@ -54,7 +59,7 @@ export class Querys{
     async updateCita(data,id){
         try {
             // const 
-            const url = this.#urlCitas;
+            const url = this.#urlCitas+"/agendamiento_citas/citas/";
             const params = {
               method: "PUT",
               headers: {

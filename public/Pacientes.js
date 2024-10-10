@@ -1,6 +1,6 @@
-import { Form } from "./Form.js?sssssssssssss";
-import { Modal } from "./Modal.js?bnsssssssssssn";
-import { CitasMedicas } from "./javascript.js?sm";
+import { Form } from "./Form.js?ssssssssssssss";
+import { Modal } from "./Modal.js?bnssssssssssssn";
+import { CitasMedicas } from "./javascript.js?ssm";
 
 export class Pacientes {
   container;
@@ -16,7 +16,7 @@ export class Pacientes {
   }
 
   renderCitas(paciente, medicos, buttonMaster, renderGen) {
-    console.log(renderGen, "renderGen");
+    // console.log(renderGen, "renderGen");
 
     const reload = (
       prevData,
@@ -26,7 +26,7 @@ export class Pacientes {
       paciente,
       renderGen
     ) => {
-      console.log(renderGen, "renderGen");
+    //   console.log(renderGen, "renderGen");
       this.container = document.querySelector("#pacientes");
       this.renderCitas = renderCitas;
       this.medicos = medicos;
@@ -111,7 +111,7 @@ export class Pacientes {
     return paciente.citas.length !== 0 ? containerForm : mensaje;
   }
   render(pacientes, medicos, buttonReload, renderGen) {
-    console.log(renderGen, "medicos");
+    // console.log(renderGen, "medicos");
     const renderInModal = () => {
       // this.modal.setContent("Citas de "+paciente.nombre +" " +paciente.apellido,cita,this.currentDate,null);
     };
